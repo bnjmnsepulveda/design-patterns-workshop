@@ -18,7 +18,8 @@ public class VillainSqlTemplate extends SqlTemplate<Villain> {
         return Villain.builder()
                 .name(rs.getString("name"))
                 .power(rs.getString("power"))
-                .heroEnemy(rs.getString("heroEnemy"))
+                .universe(rs.getString("universe"))
+                .heroEnemy(rs.getString("hero_enemy"))
                 .build();
     }
 }

@@ -15,6 +15,18 @@ public class PostgresVillainDAO implements VillainDAO {
     }
 
     @Override
+    public int save(Villain villain) {
+        var insert = "INSERT INTO villain (\"name\", power, universe, hero_enemy) VALUES(?, ?, ?, ?)";
+        return template.update(
+                insert,
+                villain.getName(),
+                villain.getPower(),
+                villain.getUniverse(),
+                villain.getHeroEnemy()
+        );
+    }
+
+    @Override
     public Villain findByName(String name) {
         return template.selectOne("SELECT * FROM villains WHERE name = ?", name);
     }
