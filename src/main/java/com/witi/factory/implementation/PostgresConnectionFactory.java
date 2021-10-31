@@ -1,24 +1,27 @@
 package com.witi.factory.implementation;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.ToString;
+import com.witi.factory.pattern.ConnectionFactory;
+import lombok.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@Data
+@Getter
+@Setter
+@Builder
 @ToString
-public class PostgresConnectionFactory {
+@AllArgsConstructor
+@NoArgsConstructor
+public class PostgresConnectionFactory implements ConnectionFactory {
 
     private String hostname;
     private String database;
     private String user;
     private String pass;
-    private int port;
 
+    @Override
     public Connection getConnection() throws SQLException {
         Connection connection;
         String url = "jdbc:postgresql://" + hostname + "/" + database;

@@ -20,7 +20,34 @@ public abstract class SqlTemplate<T> {
 
     protected abstract T adapterEntity(ResultSet rs) throws SQLException;
 
-    protected List<T> selectMany(String sql, Object... params) throws SQLException {
+    public List<T> selectMany(String sql) {
+
+        List<T> entities = new ArrayList();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            connection = connectionFactory.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                entities.add(adapterEntity(rs));
+            }
+
+        } catch (Exception ex) {
+            throw new SqlTemplateException("SqlTemplate couldn't execute " + sql, ex);
+        } finally {
+            closePrepareStatement(ps);
+            closeConnection(connection);
+            closeResultSet(rs);
+        }
+        return entities;
+    }
+
+    public List<T> selectMany(String sql, Object... params) {
 
         List<T> entities = new ArrayList();
         Connection connection = null;
@@ -48,7 +75,34 @@ public abstract class SqlTemplate<T> {
         return entities;
     }
 
-    protected T selectOne(String sql, Object... params) throws SQLException {
+    public T selectOne(String sql) {
+
+        T entity = null;
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            connection = connectionFactory.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                entity = adapterEntity(rs);
+            }
+
+        } catch (Exception ex) {
+            throw new SqlTemplateException("SqlTemplate couldn't execute " + sql, ex);
+        } finally {
+            closePrepareStatement(ps);
+            closeConnection(connection);
+            closeResultSet(rs);
+        }
+        return entity;
+    }
+
+    public T selectOne(String sql, Object... params) {
 
         T entity = null;
         Connection connection = null;
@@ -76,7 +130,28 @@ public abstract class SqlTemplate<T> {
         return entity;
     }
 
-    protected int update(String sql, Object... params) throws SQLException {
+    public int update(String sql) {
+
+        int updated = 0;
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try {
+
+            connection = connectionFactory.getConnection();
+            ps = connection.prepareStatement(sql);
+            updated =  ps.executeUpdate();
+
+        } catch (Exception ex) {
+            throw new SqlTemplateException("SqlTemplate couldn't execute " + sql, ex);
+        } finally {
+            closePrepareStatement(ps);
+            closeConnection(connection);
+        }
+        return updated;
+    }
+
+    public int update(String sql, Object... params) {
 
         int updated = 0;
         Connection connection = null;
@@ -99,7 +174,7 @@ public abstract class SqlTemplate<T> {
         return updated;
     }
 
-    public void closePrepareStatement(PreparedStatement ps) {
+    protected void closePrepareStatement(PreparedStatement ps) {
         try {
            if (ps != null) {
                ps.close();
@@ -109,7 +184,7 @@ public abstract class SqlTemplate<T> {
         }
     }
 
-    public void closeResultSet(ResultSet rs) {
+    protected void closeResultSet(ResultSet rs) {
         try {
             if (rs != null) {
                 rs.close();
@@ -119,7 +194,7 @@ public abstract class SqlTemplate<T> {
         }
     }
 
-    public void closeConnection(Connection c) {
+    protected void closeConnection(Connection c) {
         try {
             if (c != null) {
                 c.close();

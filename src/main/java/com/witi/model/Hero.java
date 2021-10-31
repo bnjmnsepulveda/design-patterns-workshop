@@ -10,5 +10,6 @@ import lombok.ToString;
 public class Hero {
     private String name;
     private String power;
+    private String universe;
     private String villainEnemy;
 }
