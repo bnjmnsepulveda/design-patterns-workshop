@@ -16,7 +16,7 @@ public class PostgresVillainDAO implements VillainDAO {
 
     @Override
     public int save(Villain villain) {
-        var insert = "INSERT INTO villain (\"name\", power, universe, hero_enemy) VALUES(?, ?, ?, ?)";
+        var insert = "INSERT INTO villains (\"name\", power, universe, hero_enemy) VALUES(?, ?, ?, ?)";
         return template.update(
                 insert,
                 villain.getName(),
@@ -33,11 +33,11 @@ public class PostgresVillainDAO implements VillainDAO {
 
     @Override
     public List<Villain> findAll() {
-        return template.selectMany("SELECT * FROM villain");
+        return template.selectMany("SELECT * FROM villains");
     }
 
     @Override
     public List<Villain> findByUniverse(String universe) {
-        return template.selectMany("SELECT * FROM heroes WHERE villain = ?", universe);
+        return template.selectMany("SELECT * FROM villains WHERE universe = ?", universe);
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface HeroDAO {
 
+    int save(Hero hero);
     List<Hero> findAll();
     List<Hero> findByUniverse(String universe);
 

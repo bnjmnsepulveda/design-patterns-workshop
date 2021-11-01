@@ -15,6 +15,18 @@ public class PostgresHeroDAO implements HeroDAO {
     }
 
     @Override
+    public int save(Hero hero) {
+        var insert = "INSERT INTO heroes (\"name\", power, universe, villain_enemy) VALUES(?, ?, ?, ?)";
+        return template.update(
+                insert,
+                hero.getName(),
+                hero.getPower(),
+                hero.getUniverse(),
+                hero.getVillainEnemy()
+        );
+    }
+
+    @Override
     public List<Hero> findAll() {
         return template.selectMany("SELECT * FROM heroes");
     }
