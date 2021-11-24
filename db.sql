@@ -1,6 +1,6 @@
 
 CREATE TABLE heroes (
-	name varchar(200) UNIQUE,
+	name varchar(200),
 	power varchar(200),
 	universe varchar(200),
 	villain_enemy varchar(200)
@@ -14,7 +14,7 @@ INSERT INTO public.heroes (name, power, universe, villain_enemy) VALUES('dragon 
 INSERT INTO public.heroes (name, power, universe, villain_enemy) VALUES('Cisne hyoga', 'polvo de diamantes', 'saint-seiya', 'Acuario kamus');
 
 CREATE TABLE villains (
-	name varchar(200) UNIQUE,
+	name varchar(200),
 	power varchar(200),
 	universe varchar(200),
 	hero_enemy varchar(200)
