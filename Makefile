@@ -2,6 +2,7 @@
 DB_NAME=db-workshop
 
 build-app:
+	mvn clean
 	mvn package
 
 run:
