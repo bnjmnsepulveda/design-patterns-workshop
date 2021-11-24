@@ -20,7 +20,7 @@ public class App {
                 .database("witi")
                 .hostname("localhost")
                 .pass("witi")
-                .user("postgres")
+                .user("witi")
                 .build();
 
         // hero DAO

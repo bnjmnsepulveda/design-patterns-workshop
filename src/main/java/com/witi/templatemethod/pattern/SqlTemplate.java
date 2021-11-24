@@ -66,7 +66,7 @@ public abstract class SqlTemplate<T> {
             }
 
         } catch (Exception ex) {
-            throw new SqlTemplateException("SqlTemplate couldn't execute " + sql, ex);
+            throw new SqlTemplateException("SqlTemplate couldn t execute " + sql, ex);
         } finally {
             closePrepareStatement(ps);
             closeConnection(connection);
