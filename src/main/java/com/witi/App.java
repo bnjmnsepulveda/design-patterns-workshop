@@ -4,6 +4,7 @@ import com.witi.dao.implementation.PostgresHeroDAO;
 import com.witi.dao.implementation.PostgresVillainDAO;
 import com.witi.dao.pattern.HeroDAO;
 import com.witi.factory.implementation.PostgresConnectionFactory;
+import com.witi.factory.implementation.VillainDAOFactory;
 import com.witi.factory.pattern.ConnectionFactory;
 import com.witi.model.Hero;
 import com.witi.model.Villain;
@@ -26,9 +27,6 @@ public class App {
         // hero DAO
         HeroSqlTemplate heroTemplate = new HeroSqlTemplate(connectionFactory);
         HeroDAO heroDAO = new PostgresHeroDAO(heroTemplate);
-        // villain DAO
-        var villainTemplate = new VillainSqlTemplate(connectionFactory);
-        var villainDAO = new PostgresVillainDAO(villainTemplate);
 
         var goku = HeroObjectMother.withName("Goku ultrainstinto");
         var gohan = HeroObjectMother.withName("gohan");
@@ -42,18 +40,9 @@ public class App {
                 .forEach(System.out::println);
 
 
-        var villain = Villain.builder()
-                .name("Mr burns")
-                .heroEnemy("maggie simpson")
-                .universe("simpsons")
-                .power("shutdown the sun")
-                .build();
 
-        var saved = villainDAO.save(villain);
-        System.out.println("saved = " + saved);
-        var records = villainDAO.findAll();
-        records.forEach(System.out::println);
 
 
     }
+
 }
