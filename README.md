@@ -13,7 +13,7 @@ Implementacion y ejemplo de patrones de diseño
 ```bash
 
 # using a postgres with docker
-make init-db
+make start-db
 
 # compile
 mvn package
